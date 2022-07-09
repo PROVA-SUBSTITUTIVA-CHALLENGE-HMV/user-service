@@ -32,10 +32,9 @@ public class UserMapper {
 
   public UserResponse toResponse(final User user) {
     return UserResponse.builder()
-        .id(user.getId())
-        .name(user.getName())
+        .id(user.getId().toString())
+        .nome(user.getName())
         .email(user.getEmail())
-        .status(user.getStatus())
         .build();
 
   }
