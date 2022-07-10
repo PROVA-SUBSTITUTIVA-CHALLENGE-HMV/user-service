@@ -9,6 +9,7 @@ import com.vergara.henrique.userservice.model.entity.User;
 import com.vergara.henrique.userservice.model.request.CreateUserRequest;
 import com.vergara.henrique.userservice.model.request.UpdateUserRequest;
 import com.vergara.henrique.userservice.repository.UserRepository;
+import com.vergara.henrique.userservice.service.SendUserWelcomeEmail;
 import com.vergara.henrique.userservice.service.UserService;
 import com.vergara.henrique.userservice.util.mapper.UserMapper;
 import java.util.List;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserMapper userMapper;
+
+  @Autowired
+  private SendUserWelcomeEmail sendEmail;
 
   @Override
   public User login(String email, String password) {
@@ -66,6 +70,7 @@ public class UserServiceImpl implements UserService {
         });
 
     final var userEntity = userMapper.toUser(request);
+    sendEmail.sendWelcomeEmail(request);
     return userRepository.save(userEntity);
   }
 
